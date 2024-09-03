@@ -4,6 +4,9 @@
 
 - If the url http://localhost:5173/ seems no working, take a look on terminal logs, you`ll be noticed about --host used by Vite, f.e. http://192.168.33.3:5173
 
+- To fix issue: "unknown host.docker.internal IP", just open /etc/hosts file:
+`sudo nano /etc/hosts` . Then add new line: `172.17.0.1 host.docker.internal` 
+
 ...
 
 # Real-time Delivery Service Using MongoDB Change Streams
