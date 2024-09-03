@@ -1,0 +1,54 @@
+services:
+  server:
+    restart: always
+    build: 
+      context: ./
+      target: express
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5050:5050
+    networks:
+      - server-mongo
+      - server-client
+    depends_on:
+      - mongo
+  client:
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    expose:
+      - 5173
+    networks:
+      - server-client
+    depends_on:
+      - server
+  mongo:
+ #   restart: always
+    image: mongo
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - server-mongo
+    ports:
+      - 27017:27017
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+networks:
+  server-mongo:
+  server-client:
+volumes:
+  mongo_data:
