@@ -1,3 +1,11 @@
+# It should work just cloning this repo, and running:
+
+`docker-compose up`
+
+- If the url http://localhost:5173/ seems no working, take a look on terminal logs, you`ll be noticed about --host used by Vite, f.e. http://192.168.33.3:5173
+
+...
+
 # Real-time Delivery Service Using MongoDB Change Streams
 The project demonstrates the use of MongoDB Change Streams in a real-time location tracking application. The application is a local package delivery service similar to Uber.
 
@@ -5,6 +13,7 @@ The project demonstrates the use of MongoDB Change Streams in a real-time locati
 The Real-time Delivery Service application allows customers to track their package deliveries in real-time. The application utilizes MongoDB Change Streams to listen for document updates like location and shipment status and uses Socket.io to broadcast them to the connected clients.
 
 ## How to Run the Application
+
 - Clone the repository to your local machine.
 - Create a .env file in the root of the project.
 - Add the MONGODB_CONNECTION_STRING
